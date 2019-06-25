@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+<form method="post" style="max-width:600px;" th:object="${asset}">
+    <div class="form-group">
+        <label th:for="name">Asset Name</label>
+        <input class="form-control" th:field="*{name}" />
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="department">department</label>
+        <select name="departmentId">
+            <option th:each="department : ${departments}"
+                    th:text="${department.name}"
+                    th:value="${department.id}"></option>
+        </select>
+    </div>
+
+
+    <input type="submit" value="Add Asset" />
+</form>
+
+</body>
+</html>

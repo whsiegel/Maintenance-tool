@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+
+<div th:object="${department}">
+    <label th:for="department">departments</label>
+    <ul th:each="department : ${departments}">
+        <li th:text="${department.name}">
+        </li>
+    </ul>
+</div>
+<form method="post" style="max-width:600px;" th:object="${department}">
+    <div class="form-group">
+        <label th:for="name">Department Name</label>
+        <input class="form-control" th:field="*{name}" />
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+    <input type="submit" value="Add Department"/>
+</form>
+</body>
+</html>

@@ -3,8 +3,7 @@ package uptodatemaintainers.Maintenancetool.models;
 
 
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,30 +20,19 @@ public class User {
     @NotNull
     private String username;
 
-    @NotNull
+    @Email
     private String email;
 
     @NotNull
     private String passwordHash;
 
-    private String role;
-
-    private static PasswordEncoder encoder = new BCryptPasswordEncoder();
+    private String role = "king";
 
     public User(String username, String email, String passwordHash){
 
     }
 
     public User() {}
-
-    public void setPassword(String password){
-        passwordHash = encoder.encode(password);
-    }
-
-    public boolean checkPass(String password){
-        return encoder.matches(password, passwordHash);
-    }
-
 
     public int getId() {
         return id;
@@ -56,10 +44,6 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setUsername(String username) {
