@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class Department {
 
     @Id
@@ -14,7 +15,6 @@ public class Department {
 
     @NotEmpty
     @NotNull
-    @Column(unique = true)
     String name;
 
     @OneToMany

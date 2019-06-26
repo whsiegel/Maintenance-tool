@@ -20,6 +20,8 @@
         <input class="form-control" th:field="*{name}" />
         <span th:errors="*{name}" class="error"></span>
     </div>
+    <div th:if="${error}" th:text="${error}" class="alert alert-warning" role="alert">
+    </div>
     <input type="submit" value="Add Department"/>
 </form>
 </body>

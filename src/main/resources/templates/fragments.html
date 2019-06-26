@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:fragment="head">
     <meta charset="UTF-8"/>
-    <title th:text="${title}">My maintenance tool</title>
+    <title th:text="${title}">My Cheeses</title>
 
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
@@ -11,6 +11,12 @@
 </head>
 <body>
 
+<nav th:fragment="navigation">
+    <a href="/">Home</a> |
+    <a href="/asset/add">Add Asset</a> |
+    <a href="/department/add">Add Department</a> |
+    <a href="/createWorkOrder">New Work Orders</a>
+</nav>
 
 </body>
 </html>

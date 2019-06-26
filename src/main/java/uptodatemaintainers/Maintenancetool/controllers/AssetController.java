@@ -44,9 +44,20 @@ public class AssetController {
             return "Asset/add";
         }
 
+        Asset asset = assetDao.getByName(newAsset.getName());
+        if(asset != null){
+
+            model.addAttribute("title", "Add Department");
+            model.addAttribute("error", "Already an entry" );
+            model.addAttribute("departments", departmentDao.findAll());
+            return "Asset/add";
+        }
+
         Department dep = departmentDao.findOne(departmentId);
         newAsset.setDepartment(dep);
         assetDao.save(newAsset);
+        model.addAttribute("departments", departmentDao.findAll());
+
         return "Asset/add";
 
     }

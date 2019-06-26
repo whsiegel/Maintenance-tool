@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 @Entity
+@Table(uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class Asset {
 
     @Id
@@ -17,7 +18,6 @@ public class Asset {
 
     @NotEmpty
     @NotNull
-    @Column(unique = true)
     private String name;
 
     @ManyToOne

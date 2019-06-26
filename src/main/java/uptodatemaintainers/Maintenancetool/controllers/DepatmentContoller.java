@@ -8,24 +8,22 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import uptodatemaintainers.Maintenancetool.models.Data.DepartmentDao;
 import uptodatemaintainers.Maintenancetool.models.Department;
 
 import javax.validation.Valid;
 
-
 @Controller
 public class DepatmentContoller {
 
     @Autowired
-    DepartmentDao departmentdao;
+    DepartmentDao departmentDao;
 
     @GetMapping("department/add")
     public String displayDepartmentForm(Model model) {
         model.addAttribute("title", "Add Department");
         model.addAttribute(new Department());
-        model.addAttribute("departments", departmentdao.findAll());
+        model.addAttribute("departments", departmentDao.findAll());
         return "Department/add";
     }
 
@@ -35,11 +33,24 @@ public class DepatmentContoller {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Department");
             model.addAttribute(new Department());
-            model.addAttribute("departments", departmentdao.findAll());
+            model.addAttribute("departments", departmentDao.findAll());
+
             return "Department/add";
         }
-        departmentdao.save(newDepartment);
-        return "redirect: Department/add";
+        Department department = departmentDao.getByName(newDepartment.getName());
+        if(department != null){
+
+            model.addAttribute("title", "Add Department");
+            model.addAttribute("error", "Already an entry" );
+            model.addAttribute("departments", departmentDao.findAll());
+            return "Department/add";
+        }
+
+            
+
+        departmentDao.save(newDepartment);
+        return "index";
+
     }
 
 }
