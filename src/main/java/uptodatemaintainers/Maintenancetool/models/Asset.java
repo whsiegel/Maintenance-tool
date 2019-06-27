@@ -52,11 +52,4 @@ public class Asset {
         this.department = department;
     }
 
-    public List<Parts> getParts() {
-        return parts;
-    }
-
-    public void setParts(List<Parts> parts) {
-        this.parts = parts;
-    }
 }

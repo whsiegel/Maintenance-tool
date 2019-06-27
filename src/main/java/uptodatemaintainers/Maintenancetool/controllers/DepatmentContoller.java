@@ -30,11 +30,11 @@ public class DepatmentContoller {
     @PostMapping("department/add")
     public String processDepartmentForm(@ModelAttribute @Valid Department newDepartment,
                                         Errors errors, Model model) {
+        model.addAttribute("departments", departmentDao.findAll());
+
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Department");
             model.addAttribute(new Department());
-            model.addAttribute("departments", departmentDao.findAll());
-
             return "Department/add";
         }
         Department department = departmentDao.getByName(newDepartment.getName());
@@ -42,14 +42,13 @@ public class DepatmentContoller {
 
             model.addAttribute("title", "Add Department");
             model.addAttribute("error", "Already an entry" );
-            model.addAttribute("departments", departmentDao.findAll());
             return "Department/add";
         }
 
-            
-
         departmentDao.save(newDepartment);
-        return "index";
+        model.addAttribute(new Department());
+        model.addAttribute("title", "Add Department");
+        return "Department/add";
 
     }
 

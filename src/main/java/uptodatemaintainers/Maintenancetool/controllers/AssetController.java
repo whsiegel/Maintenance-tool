@@ -62,6 +62,22 @@ public class AssetController {
 
     }
 
+    @GetMapping("asset/list")
+    public String listAssets(Model model){
+
+        model.addAttribute("assets", assetDao.findAll());
+
+        return"Asset/list";
+
+    }
+
+    @GetMapping("asset/details")
+    public String assetDetials(Model model, @RequestParam String asset){
+
+        model.addAttribute("asset", assetDao.getByName(asset));
+
+        return "Asset/details";
+    }
 
 
 }
