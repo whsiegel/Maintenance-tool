@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import uptodatemaintainers.Maintenancetool.models.Asset;
 import uptodatemaintainers.Maintenancetool.models.Data.AssetDao;
 import uptodatemaintainers.Maintenancetool.models.Data.DepartmentDao;
@@ -17,6 +14,7 @@ import javax.validation.Valid;
 
 
 @Controller
+@RequestMapping("asset")
 public class AssetController {
 
     @Autowired
@@ -25,7 +23,7 @@ public class AssetController {
     @Autowired
     DepartmentDao departmentDao;
 
-    @GetMapping("asset/add")
+    @GetMapping("/add")
     public String userSignupForm(Model model) {
         model.addAttribute("title", "Add Asset");
         model.addAttribute(new Asset());
@@ -33,7 +31,7 @@ public class AssetController {
         return "Asset/add";
     }
 
-    @PostMapping("asset/add")
+    @PostMapping("/add")
     public String AddAssetForm(@ModelAttribute @Valid Asset newAsset,
                                        Errors errors, @RequestParam int departmentId, Model model){
 
@@ -62,7 +60,7 @@ public class AssetController {
 
     }
 
-    @GetMapping("asset/list")
+    @GetMapping("/list")
     public String listAssets(Model model){
 
         model.addAttribute("assets", assetDao.findAll());
@@ -71,7 +69,7 @@ public class AssetController {
 
     }
 
-    @GetMapping("asset/details")
+    @GetMapping("/details")
     public String assetDetials(Model model, @RequestParam String asset){
 
         model.addAttribute("asset", assetDao.getByName(asset));
