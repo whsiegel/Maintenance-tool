@@ -8,7 +8,14 @@
 
 <form method="post" style="max-width:600px;" th:object="${workOrder}">
     <div>
-        <input type="text" value=""/>
+        <input type="text" value="description" size="250"/>
+    </div>
+    <div>
+        <select name="assetId">
+            <option th:each="asset : ${assets}"
+                    th:text="${asset.name}"
+                    th:value="${asset.id}"></option>
+        </select>
     </div>
 
     <input type="submit" value="Add Work Order" />
