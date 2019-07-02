@@ -37,6 +37,8 @@ public class AssetController {
     public String AddAssetForm(@ModelAttribute @Valid Asset newAsset,
                                        Errors errors, @RequestParam int departmentId, Model model){
 
+
+
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Asset");
             model.addAttribute(new Asset());
