@@ -1,6 +1,7 @@
 package uptodatemaintainers.Maintenancetool.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -23,6 +24,7 @@ public class AssetController {
     @Autowired
     DepartmentDao departmentDao;
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/add")
     public String userSignupForm(Model model) {
         model.addAttribute("title", "Add Asset");
@@ -30,7 +32,7 @@ public class AssetController {
         model.addAttribute("departments", departmentDao.findAll());
         return "Asset/add";
     }
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/add")
     public String AddAssetForm(@ModelAttribute @Valid Asset newAsset,
                                        Errors errors, @RequestParam int departmentId, Model model){

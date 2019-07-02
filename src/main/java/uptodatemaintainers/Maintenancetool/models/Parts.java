@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class Parts {
-
+    
     @Id
     @GeneratedValue
     private int id;
@@ -25,8 +25,7 @@ public class Parts {
     @ManyToOne
     private Asset asset;
 
-    public Parts() {
-    }
+    public Parts() {}
 
     public String getPartNumber() {
         return partNumber;

@@ -6,15 +6,14 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<div class="container body-content">
-
+<form method="post" style="max-width:600px;" th:object="${workOrder}">
     <div>
-        <h2 th:text="${asset.name}"></h2>
-        <h3 th:text="${asset.department.name}"></h3>
+        <input type="text" value=""/>
     </div>
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
-</div>
+    <input type="submit" value="Add Work Order" />
+</form>
+<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
 
 </body>

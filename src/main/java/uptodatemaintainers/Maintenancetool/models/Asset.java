@@ -1,6 +1,5 @@
 package uptodatemaintainers.Maintenancetool.models;
 
-
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -23,10 +22,8 @@ public class Asset {
     @ManyToOne
     private Department department;
 
-    @OneToMany
-    @JoinColumn(name = "asset_id")
-    private List<Parts> parts = new ArrayList<>();
-
+    @ManyToOne
+    private WorkOrder workOrder;
 
     public Asset() {
     }
@@ -35,6 +32,13 @@ public class Asset {
         return id;
     }
 
+    public WorkOrder getWorkOrder() {
+        return workOrder;
+    }
+
+    public void setWorkOrder(WorkOrder workOrder) {
+        this.workOrder = workOrder;
+    }
 
     public String getName() {
         return name;

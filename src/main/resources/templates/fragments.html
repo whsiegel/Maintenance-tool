@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:fragment="head">
-    <meta charset="UTF-8"/>
-    <title th:text="${title}">My Cheeses</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title th:text="${pageTitle}">Title HERE</title>
 
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+    <style type="text/css">
+        body {
+      background-color: #DADADA;
+    }
+    body > .grid {
+      height: 100%;
+    }
+    .image {
+      margin-top: -100px;
+    }
+    .column {
+      max-width: 450px;
+    }
+  </style>
+
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </head>
@@ -15,9 +33,16 @@
     <a href="/">Home</a> |
     <a href="/asset/add">Add Asset</a> |
     <a href="/department/add">Add Department</a> |
-    <a href="/new-work-order">Create Work Order</a> |
-    <a href="/asset/list">List of Assets</a>
+    <a href="/work-order/add">Create Work Order</a> |
+    <a href="/asset/list">List of Assets</a> |
+
 </nav>
 
 </body>
+<div th:fragment="script">
+    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.js"></script>
+</div>
 </html>
+
+

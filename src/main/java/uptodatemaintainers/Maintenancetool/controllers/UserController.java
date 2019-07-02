@@ -2,41 +2,88 @@ package uptodatemaintainers.Maintenancetool.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import uptodatemaintainers.Maintenancetool.models.Data.UserDao;
+import uptodatemaintainers.Maintenancetool.models.Data.MyGrantAuthorityRepository;
+import uptodatemaintainers.Maintenancetool.models.Data.UserRepository;
+import uptodatemaintainers.Maintenancetool.models.MyGrantAuthority;
 import uptodatemaintainers.Maintenancetool.models.User;
+import uptodatemaintainers.Maintenancetool.models.forms.SignupForm;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.HashSet;
+import java.util.Set;
 
 @Controller
 public class UserController {
 
     @Autowired
-    UserDao userDao;
+    private UserRepository userRepository;
 
-    @GetMapping("signup")
-    public String userSignupForm(Model model){
-        model.addAttribute("title", "Sign up");
-        model.addAttribute(new User());
-        return "signup";
+    @Autowired
+    private MyGrantAuthorityRepository grantRepo;
+
+    @GetMapping("/login")
+    public String getLoginPage() {
+        return "user/login";
     }
 
-    @PostMapping("signup")
-    public String processSignupForm(@ModelAttribute @Valid User newUser,
-                                    Errors errors, Model model){
-        if (errors.hasErrors()){
-            model.addAttribute("title", "Sign up");
-            return "signup";
+    @GetMapping("/signup")
+    public String getSignupPage(Model model) {
+        model.addAttribute(new SignupForm());
+        return "user/signup";
+    }
+
+    @PostMapping("/signup")
+    public String processSignup(
+            HttpServletRequest request,
+            @ModelAttribute @Valid SignupForm form,
+            Errors errors,
+            Model model
+    ) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("signupForm", form);
+            return "user/signup";
         }
 
-        userDao.save(newUser);
-        return "index";
-    }
+        if (!form.passwordsMatch()) {
+            model.addAttribute("signupForm", form);
+            model.addAttribute("error", "Passwords do not match");
+            return "user/signup";
+        }
 
+        if (userRepository.findByUsername(form.getUsername()) != null) {
+            model.addAttribute("signupForm", form);
+            model.addAttribute("error", "User already exists");
+            return "user/signup";
+        }
+
+
+        // Create user
+        Set<MyGrantAuthority> grants = new HashSet<>();
+        grants.add(grantRepo.getByRole("USER"));
+        User user = new User(form.getUsername(), grants, form.getPassword());
+        userRepository.save(user);
+
+        // Add user to session
+        try {
+            request.login(form.getUsername(), form.getPassword());
+        } catch (ServletException e) {
+            System.out.println("Failed to add user to session: " + e.toString());
+        }
+        return "redirect:/";
+    }
+    
 }
