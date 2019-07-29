@@ -1,4 +1,4 @@
-package uptodatemaintainers.Maintenancetool.controllers;
+/*package uptodatemaintainers.Maintenancetool.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,10 +9,10 @@ public class ErrorController {
 
     @GetMapping("/error")
     public String getError(){
-        // handles 403 error 'access denied'
+
         return "/error";
     }
 
 }
 
-
+*/

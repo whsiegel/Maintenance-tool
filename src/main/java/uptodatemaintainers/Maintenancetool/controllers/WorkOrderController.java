@@ -22,13 +22,12 @@ public class WorkOrderController {
 
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @GetMapping("/add")
-    public String createWorkOrder(Model model){
+    public String createWorkOrder(Model model) {
         model.addAttribute("title", "Add Work Order");
         model.addAttribute(new WorkOrder());
         model.addAttribute("assets", assetDao.findAll());
 
         return "WorkOrder/add";
     }
-
 
 }

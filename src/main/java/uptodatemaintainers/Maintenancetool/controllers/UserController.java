@@ -45,6 +45,16 @@ public class UserController {
         return "user/signup";
     }
 
+    @GetMapping("/logout")
+    public String getLogout(){
+        return "user/logout";
+    }
+
+    @PostMapping("/logout")
+    public String postLogout(){
+        return "redirect:/user/login";
+    }
+
     @PostMapping("/signup")
     public String processSignup(
             HttpServletRequest request,

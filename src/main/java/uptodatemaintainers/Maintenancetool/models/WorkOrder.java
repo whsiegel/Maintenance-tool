@@ -13,6 +13,8 @@ public class WorkOrder {
     @Size(min=5)
     private String Description;
 
+    private boolean status;
+
     @OneToMany
     @JoinColumn(name="workOrder_id")
 
@@ -28,4 +30,11 @@ public class WorkOrder {
         Description = description;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 }
